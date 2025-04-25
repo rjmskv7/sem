@@ -1,55 +1,42 @@
-import java.util.Scanner;
-
-class CaesarCipher {
-    public static String encryptData(String inputStr, int shiftKey) {
-        StringBuilder encryptStr = new StringBuilder();
-        
-        for (int i = 0; i < inputStr.length(); i++) {
-            char ch = inputStr.charAt(i);
-            
-            if (Character.isLetter(ch)) {
-                char base = Character.isUpperCase(ch) ? 'A' : 'a';
-                char encryptChar = (char) ((ch - base + shiftKey) % 26 + base);
-                encryptStr.append(encryptChar);
-            } else {
-                encryptStr.append(ch); // Keep non-alphabetic characters unchanged
-            }
-        }
-        return encryptStr.toString();
-    }
-
-    public static String decryptData(String inputStr, int shiftKey) {
-        StringBuilder decryptStr = new StringBuilder();
-        
-        for (int i = 0; i < inputStr.length(); i++) {
-            char ch = inputStr.charAt(i);
-            
-            if (Character.isLetter(ch)) {
-                char base = Character.isUpperCase(ch) ? 'A' : 'a';
-                char decryptChar = (char) ((ch - base - shiftKey + 26) % 26 + base);
-                decryptStr.append(decryptChar);
-            } else {
-                decryptStr.append(ch); // Keep non-alphabetic characters unchanged
-            }
-        }
-        return decryptStr.toString();
-    }
-
+import java.util.Scanner;  
+class Expt1 {
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";   
+    public static String encryptData(String inputStr, int shiftKey) {      
+        inputStr = inputStr.toLowerCase();   
+        String encryptStr = "";     
+        for (int i = 0; i < inputStr.length(); i++) {      
+            int pos = ALPHABET.indexOf(inputStr.charAt(i));      
+            int encryptPos = (shiftKey + pos) % 26;   
+            char encryptChar = ALPHABET.charAt(encryptPos);   
+            encryptStr += encryptChar;   
+        }   
+        return encryptStr;   
+    }   
+    public static String decryptData(String inputStr, int shiftKey) {      
+        inputStr = inputStr.toLowerCase();   
+        String decryptStr = "";      
+        for (int i = 0; i < inputStr.length(); i++) {    
+            int pos = ALPHABET.indexOf(inputStr.charAt(i));      
+            int decryptPos = (pos - shiftKey + 26) % 26;   
+            char decryptChar = ALPHABET.charAt(decryptPos);   
+            decryptStr += decryptChar;   
+        }   
+        return decryptStr;   
+    }   
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the shift key: ");
-        int shiftKey = sc.nextInt();
-        sc.nextLine(); // Consume the newline character
-        
-        System.out.print("Enter a message to encrypt: ");
-        String message = sc.nextLine();
-        
-        String encryptedMessage = encryptData(message, shiftKey);
-        System.out.println("Encrypted Message: " + encryptedMessage);
-        
-        String decryptedMessage = decryptData(encryptedMessage, shiftKey);
-        System.out.println("Decrypted Message: " + decryptedMessage);
-
+        System.out.print("Enter shift key: ");
+        int a = sc.nextInt();
+        System.out.print("Enter string to encrypt: ");
+        String b = sc.next();
+        Expt1 c = new Expt1();
+        String encryptedData = c.encryptData(b, a);
+        System.out.println("Encrypted Data: " + encryptedData);
+        String decryptedData = c.decryptData(encryptedData, a);
+        System.out.println("Decrypted Data: " + decryptedData);
+        System.out.println("Shift Key: " + a);
+        System.out.println("Original String: " + b);
         sc.close();
     }
 }
+
